@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: GPL-2.0
-pragma solidity ^0.8.0;
+pragma solidity 0.8.26;
 
 import {KittyPool} from "src/KittyPool.sol";
 import {PropertiesAsserts} from "test/invariant/utils/PropertiesHelper.sol";
 import {LibAddressSet} from "test/invariant/utils/LibAddressSet.sol";
 import {BeforeAfter} from "test/invariant/BeforeAfter.sol";
+import {KittyPool} from "src/KittyPool.sol";
 
 contract Handler is PropertiesAsserts, BeforeAfter {
-    using LibAddressSet for LibAddressSet.AddressSet; // Fix: Use fully qualified struct name
-    LibAddressSet.AddressSet internal _actors; // Fix: Use fully qualified struct name
-    address public currentActor; // Added: Define currentActor explicitly since it's used
+    using LibAddressSet for LibAddressSet.AddressSet;
+
+    LibAddressSet.AddressSet internal _actors;
+    address currentActor;
+    
 
     function kittyPool_burnKittyCoin(address _onBehalfOf, uint256 _ameownt) public createActor updateGhosts {
         kittyPool.burnKittyCoin(_onBehalfOf, _ameownt);
@@ -35,7 +38,7 @@ contract Handler is PropertiesAsserts, BeforeAfter {
         kittyPool.whiskdrawMeowllateral(_token, _ameownt);
     }
 
-    function actors() external returns (address[] memory) {
+    function actors() external view returns (address[] memory) {
         return _actors.addrs;
     }
 
@@ -44,4 +47,5 @@ contract Handler is PropertiesAsserts, BeforeAfter {
         _actors.add(msg.sender);
         _;
     }
+
 }
