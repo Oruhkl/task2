@@ -204,4 +204,9 @@ contract KittyPool {
     function getKittyCoinMeownted(address _user) external view returns (uint256) {
         return kittyCoinMeownted[_user];
     }
+    // external function wrapper for view function
+
+    function hasEnoughMeowllateral(address _user) external view returns (bool) {
+        return _hasEnoughMeowllateral(_user);
+    }
 }
